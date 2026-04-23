@@ -1,0 +1,1298 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Modern SaaS Landing Page — Case Study | Contra Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #16161f;
+    --border: rgba(255,255,255,0.07);
+    --accent: #c8ff00;
+    --accent2: #7c6fff;
+    --text: #f0f0f5;
+    --muted: #777790;
+    --card-bg: #13131c;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.5;
+  }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 40px;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .topbar-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 17px;
+    letter-spacing: -0.5px;
+    color: var(--text);
+  }
+  .topbar-logo span { color: var(--accent); }
+
+  .topbar-badge {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 14px;
+  }
+
+  .topbar-cta {
+    background: var(--accent);
+    color: #0a0a0f;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    padding: 9px 22px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .topbar-cta:hover { opacity: 0.85; }
+
+  /* ── HERO / COVER ── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 140px 40px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,111,255,0.18) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .cover-glow2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,255,0,0.1) 0%, transparent 70%);
+    bottom: 10%; right: 10%;
+    pointer-events: none;
+  }
+
+  .cover-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(200,255,0,0.08);
+    border: 1px solid rgba(200,255,0,0.2);
+    border-radius: 100px;
+    padding: 7px 18px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .cover-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  .cover h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(42px, 7vw, 88px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    max-width: 900px;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+
+  .cover h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--accent) 0%, #a8ff38 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cover-sub {
+    font-size: 19px;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 24px auto 0;
+    font-weight: 300;
+    line-height: 1.7;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  .cover-tagline {
+    margin-top: 44px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+
+  .cover-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    width: 100%;
+    max-width: 700px;
+    animation: fadeUp 0.7s 0.4s ease both;
+    flex-wrap: wrap;
+  }
+
+  .meta-item { text-align: center; }
+  .meta-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .meta-value {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--text);
+  }
+
+  /* ── SECTION LAYOUT ── */
+  .section {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 80px 40px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    max-width: 60px;
+  }
+
+  .section h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(28px, 4vw, 42px);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  .section p {
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.8;
+    max-width: 680px;
+  }
+
+  /* ── MOCKUP / PREVIEW BLOCK ── */
+  .mockup-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 60px 0;
+    position: relative;
+  }
+
+  .mockup-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 20px;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #febc2e; }
+  .dot.green { background: #28c840; }
+
+  .url-bar {
+    flex: 1;
+    background: rgba(255,255,255,0.04);
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: 8px;
+    font-family: monospace;
+  }
+
+  /* ── ACTUAL MINI LANDING PAGE PREVIEW ── */
+  .preview-site {
+    background: #f8f8fc;
+    color: #111;
+    font-family: 'DM Sans', sans-serif;
+    min-height: 500px;
+  }
+
+  .preview-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    border-bottom: 1px solid #e5e5e8;
+    background: white;
+  }
+
+  .preview-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: #0a0a0f;
+  }
+  .preview-logo span { color: #7c6fff; }
+
+  .preview-nav-links {
+    display: flex;
+    gap: 28px;
+    font-size: 13px;
+    color: #555;
+    list-style: none;
+  }
+
+  .preview-btn-sm {
+    background: #7c6fff;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 100px;
+    cursor: pointer;
+  }
+
+  .preview-hero {
+    padding: 80px 40px 60px;
+    text-align: center;
+    background: linear-gradient(180deg, #ffffff 0%, #f3f1ff 100%);
+  }
+
+  .preview-eyebrow {
+    display: inline-block;
+    background: rgba(124,111,255,0.1);
+    color: #7c6fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+
+  .preview-h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: #0a0a0f;
+    max-width: 480px;
+    margin: 0 auto 16px;
+  }
+
+  .preview-h1 span { color: #7c6fff; }
+
+  .preview-p {
+    font-size: 15px;
+    color: #666;
+    max-width: 380px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+  }
+
+  .preview-cta-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .preview-cta-primary {
+    background: #7c6fff;
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 13px 28px;
+    border-radius: 100px;
+    cursor: pointer;
+  }
+
+  .preview-cta-secondary {
+    background: transparent;
+    color: #444;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 13px 24px;
+    border-radius: 100px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+  }
+
+  .preview-stats {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    padding: 40px;
+    border-top: 1px solid #e5e5e8;
+    background: white;
+    flex-wrap: wrap;
+  }
+
+  .preview-stat-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    color: #0a0a0f;
+  }
+  .preview-stat-label { font-size: 12px; color: #999; margin-top: 2px; }
+
+  .preview-features {
+    padding: 60px 40px;
+    background: #f8f8fc;
+  }
+
+  .preview-features-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 36px;
+    color: #0a0a0f;
+  }
+
+  .preview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .preview-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #ebebf0;
+  }
+
+  .preview-card-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .preview-card-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: #0a0a0f;
+    margin-bottom: 6px;
+  }
+
+  .preview-card-desc {
+    font-size: 11px;
+    color: #888;
+    line-height: 1.6;
+  }
+
+  /* ── PROCESS STEPS ── */
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 48px;
+  }
+
+  .process-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+
+  .process-card:hover {
+    border-color: rgba(200,255,0,0.25);
+    transform: translateY(-3px);
+  }
+
+  .process-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 48px;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .process-icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .process-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .process-card p {
+    font-size: 14px !important;
+    color: var(--muted) !important;
+    line-height: 1.6 !important;
+  }
+
+  /* ── DELIVERABLES ── */
+  .deliverables-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .deliverable-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .deliverable-item:hover { border-color: rgba(200,255,0,0.2); }
+
+  .del-check {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    background: rgba(200,255,0,0.12);
+    border: 1px solid rgba(200,255,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 12px;
+    color: var(--accent);
+    margin-top: 1px;
+  }
+
+  .del-text { font-size: 14px; line-height: 1.5; }
+  .del-title { font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .del-desc { color: var(--muted); font-size: 13px; }
+
+  /* ── TOOLS ── */
+  .tools-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 36px;
+  }
+
+  .tool-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: default;
+  }
+
+  .tool-pill:hover {
+    border-color: rgba(124,111,255,0.4);
+    background: rgba(124,111,255,0.06);
+  }
+
+  .tool-emoji { font-size: 16px; }
+
+  /* ── PROBLEM / SOLUTION ── */
+  .ps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  @media (max-width: 640px) {
+    .ps-grid { grid-template-columns: 1fr; }
+    .preview-grid { grid-template-columns: 1fr; }
+    .preview-nav-links { display: none; }
+  }
+
+  .ps-card {
+    border-radius: 16px;
+    padding: 32px;
+  }
+
+  .ps-card.problem {
+    background: rgba(255,80,80,0.05);
+    border: 1px solid rgba(255,80,80,0.15);
+  }
+
+  .ps-card.solution {
+    background: rgba(200,255,0,0.04);
+    border: 1px solid rgba(200,255,0,0.15);
+  }
+
+  .ps-card-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .ps-card.problem .ps-card-label { color: #ff7070; }
+  .ps-card.solution .ps-card-label { color: var(--accent); }
+
+  .ps-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 14px;
+  }
+
+  .ps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ps-list li {
+    font-size: 14px;
+    color: var(--muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.5;
+  }
+
+  .ps-list li::before {
+    content: '→';
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .ps-card.problem .ps-list li::before { color: #ff7070; }
+  .ps-card.solution .ps-list li::before { color: var(--accent); }
+
+  /* ── TAGS ── */
+  .tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 36px;
+  }
+
+  .tag {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 7px 16px;
+    font-size: 13px;
+    color: var(--muted);
+    transition: color 0.2s, border-color 0.2s;
+    cursor: default;
+  }
+
+  .tag:hover {
+    color: var(--text);
+    border-color: rgba(255,255,255,0.2);
+  }
+
+  /* ── OUTCOME ── */
+  .outcome-block {
+    background: linear-gradient(135deg, rgba(124,111,255,0.1), rgba(200,255,0,0.06));
+    border: 1px solid rgba(124,111,255,0.2);
+    border-radius: 20px;
+    padding: 48px;
+    text-align: center;
+    margin-top: 60px;
+  }
+
+  .outcome-block h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+
+  .outcome-block p {
+    color: var(--muted);
+    font-size: 17px;
+    max-width: 520px;
+    margin: 0 auto 32px;
+  }
+
+  .outcome-metrics {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+
+  .metric-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), #a8ff38);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .metric-label {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    text-align: center;
+    padding: 80px 40px 120px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+
+  .cta-section p {
+    color: var(--muted);
+    font-size: 17px;
+    margin-bottom: 36px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-btns {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0f;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 15px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 15px 32px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.3); transform: translateY(-2px); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 40px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 32px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .footer-note {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .footer-note .dot-sm {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: rgba(200,255,0,0.5);
+    display: inline-block;
+  }
+
+  /* ── SCROLL REVEALS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* ── ROLE CHIPS ── */
+  .role-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 32px;
+  }
+
+  .role-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(124,111,255,0.1);
+    border: 1px solid rgba(124,111,255,0.25);
+    color: #a09dff;
+    border-radius: 100px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  /* spec project ribbon */
+  .spec-ribbon {
+    position: absolute;
+    top: 20px;
+    right: -30px;
+    background: #7c6fff;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 40px;
+    transform: rotate(45deg);
+    width: 160px;
+    text-align: center;
+  }
+
+  .mockup-block { overflow: hidden; }
+  .mockup-wrapper { position: relative; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <div class="topbar-logo">port<span>.</span>folio</div>
+  <div class="topbar-badge">Spec / Concept Project</div>
+  <a href="#hire" class="topbar-cta">Hire Me →</a>
+</nav>
+
+<!-- COVER / HERO -->
+<section class="cover">
+  <div class="cover-glow"></div>
+  <div class="cover-glow2"></div>
+
+  <div class="cover-tag">Portfolio Concept · Web Development</div>
+
+  <h1>Modern SaaS<br/><em>Landing Page</em><br/>Design & Dev</h1>
+
+  <p class="cover-sub">
+    A conversion-focused website concept for startups that need to look professional, explain their offer clearly, and turn visitors into leads.
+  </p>
+
+  <p class="cover-tagline">"Clean. Fast. Responsive. Built to convert."</p>
+
+  <div class="cover-meta">
+    <div class="meta-item">
+      <div class="meta-label">Project Type</div>
+      <div class="meta-value">Spec / Concept</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Role</div>
+      <div class="meta-value">Design + Dev</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Stack</div>
+      <div class="meta-value">Figma · React · Tailwind</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Timeline</div>
+      <div class="meta-value">3–5 Days</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Status</div>
+      <div class="meta-value" style="color: var(--accent)">● Available</div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE PREVIEW MOCKUP -->
+<div class="section reveal">
+  <div class="section-label">Live Preview</div>
+  <h2>What the site looks like</h2>
+  <p>A fully responsive landing page built to explain the product clearly, build trust fast, and drive one key action.</p>
+
+  <div class="mockup-block mockup-wrapper" style="margin-top: 40px;">
+    <div class="mockup-bar">
+      <div class="dot red"></div>
+      <div class="dot yellow"></div>
+      <div class="dot green"></div>
+      <div class="url-bar">https://flowsaas.vercel.app</div>
+    </div>
+
+    <!-- MINI ACTUAL LANDING PAGE -->
+    <div class="preview-site">
+      <nav class="preview-nav">
+        <div class="preview-logo">Flow<span>.</span></div>
+        <ul class="preview-nav-links">
+          <li>Product</li>
+          <li>Pricing</li>
+          <li>About</li>
+        </ul>
+        <div class="preview-btn-sm">Get Started</div>
+      </nav>
+
+      <div class="preview-hero">
+        <div class="preview-eyebrow">Now in Public Beta</div>
+        <div class="preview-h1">Run your business <span>without the chaos</span></div>
+        <p class="preview-p">Flow helps small teams manage projects, clients, and invoices in one clean workspace — no steep learning curve.</p>
+        <div class="preview-cta-row">
+          <div class="preview-cta-primary">Start for Free →</div>
+          <div class="preview-cta-secondary">See how it works</div>
+        </div>
+      </div>
+
+      <div class="preview-stats">
+        <div>
+          <div class="preview-stat-num">2,400+</div>
+          <div class="preview-stat-label">Teams onboarded</div>
+        </div>
+        <div>
+          <div class="preview-stat-num">98%</div>
+          <div class="preview-stat-label">Satisfaction rate</div>
+        </div>
+        <div>
+          <div class="preview-stat-num">4.9★</div>
+          <div class="preview-stat-label">Average rating</div>
+        </div>
+      </div>
+
+      <div class="preview-features">
+        <div class="preview-features-title">Everything your team needs</div>
+        <div class="preview-grid">
+          <div class="preview-card">
+            <div class="preview-card-icon" style="background:#f0edff;">📋</div>
+            <div class="preview-card-title">Project Board</div>
+            <div class="preview-card-desc">Visual kanban boards that keep everyone on the same page.</div>
+          </div>
+          <div class="preview-card">
+            <div class="preview-card-icon" style="background:#fff3e0;">💳</div>
+            <div class="preview-card-title">Smart Invoicing</div>
+            <div class="preview-card-desc">Send professional invoices in seconds. Get paid faster.</div>
+          </div>
+          <div class="preview-card">
+            <div class="preview-card-icon" style="background:#e8f5e9;">📊</div>
+            <div class="preview-card-title">Live Analytics</div>
+            <div class="preview-card-desc">See revenue, hours, and performance at a glance.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- PROBLEM / SOLUTION -->
+<div class="section reveal">
+  <div class="section-label">Context</div>
+  <h2>The real problem <br/>this solves</h2>
+  <p>Most startup websites look nice but fail to do the one thing they need to do — get a visitor to act.</p>
+
+  <div class="ps-grid">
+    <div class="ps-card problem">
+      <div class="ps-card-label">⚠ The Problem</div>
+      <h3>Startup sites that look good but convert poorly</h3>
+      <ul class="ps-list">
+        <li>Visitors don't understand the offer in 5 seconds</li>
+        <li>No clear call to action above the fold</li>
+        <li>Looks broken or slow on mobile</li>
+        <li>No social proof to build immediate trust</li>
+        <li>Generic copy that doesn't speak to anyone</li>
+      </ul>
+    </div>
+    <div class="ps-card solution">
+      <div class="ps-card-label">✓ The Solution</div>
+      <h3>A conversion-first layout that guides the user</h3>
+      <ul class="ps-list">
+        <li>Crystal-clear hero with a single strong CTA</li>
+        <li>Visual hierarchy that leads the eye top to bottom</li>
+        <li>Mobile-first and fast — no layout shifts</li>
+        <li>Trust signals: stats, testimonials, social proof</li>
+        <li>Clean code that scales as the product grows</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- PROCESS -->
+<div class="section reveal">
+  <div class="section-label">Process</div>
+  <h2>How I approach every project</h2>
+  <p>A clear workflow from discovery to delivery — so nothing gets missed and the build moves fast.</p>
+
+  <div class="process-grid">
+    <div class="process-card">
+      <div class="process-num">01</div>
+      <span class="process-icon">🔍</span>
+      <h3>Discovery</h3>
+      <p>I study the product, audience, competitors, and conversion goals before touching a single pixel.</p>
+    </div>
+    <div class="process-card">
+      <div class="process-num">02</div>
+      <span class="process-icon">🖼</span>
+      <h3>Wireframe</h3>
+      <p>Section-by-section layout in Figma. We align on structure and flow before designing visuals.</p>
+    </div>
+    <div class="process-card">
+      <div class="process-num">03</div>
+      <span class="process-icon">🎨</span>
+      <h3>Design</h3>
+      <p>High-fidelity design with typography, color, spacing, and component system built for real use.</p>
+    </div>
+    <div class="process-card">
+      <div class="process-num">04</div>
+      <span class="process-icon">⚡</span>
+      <h3>Build</h3>
+      <p>Pixel-perfect frontend in React + Tailwind or Framer. Responsive at every breakpoint.</p>
+    </div>
+    <div class="process-card">
+      <div class="process-num">05</div>
+      <span class="process-icon">🚀</span>
+      <h3>Launch</h3>
+      <p>Deploy to Vercel or Netlify with a live link. Hand off clean code with full documentation.</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- DELIVERABLES -->
+<div class="section reveal">
+  <div class="section-label">Deliverables</div>
+  <h2>What you get</h2>
+  <p>Everything needed to launch a site that looks professional and works hard from day one.</p>
+
+  <div class="deliverables-grid">
+    <div class="deliverable-item">
+      <div class="del-check">✓</div>
+      <div class="del-text">
+        <div class="del-title">Hero Section</div>
+        <div class="del-desc">Headline, subheadline, and primary CTA — optimized for first impressions</div>
+      </div>
+    </div>
+    <div class="deliverable-item">
+      <div class="del-check">✓</div>
+      <div class="del-text">
+        <div class="del-title">Features / Services Section</div>
+        <div class="del-desc">Card-based layout that makes the offer scannable and clear</div>
+      </div>
+    </div>
+    <div class="deliverable-item">
+      <div class="del-check">✓</div>
+      <div class="del-text">
+        <div class="del-title">Social Proof Block</div>
+        <div class="del-desc">Testimonials, stats, or logos — whichever builds trust fastest</div>
+      </div>
+    </div>
+    <div class="deliverable-item">
+      <div class="del-check">✓</div>
+      <div class="del-text">
+        <div class="del-title">About / Trust Section</div>
+        <div class="del-desc">Short founder story or brand credibility section</div>
+      </div>
+    </div>
+    <div class="deliverable-item">
+      <div class="del-check">✓</div>
+      <div class="del-text">
+        <div class="del-title">Lead Capture / Contact</div>
+        <div class="del-desc">Email form, Calendly embed, or contact section with clear next step</div>
+      </div>
+    </div>
+    <div class="deliverable-item">
+      <div class="del-check">✓</div>
+      <div class="del-text">
+        <div class="del-title">Responsive at all sizes</div>
+        <div class="del-desc">Mobile, tablet, and desktop — tested and polished at every breakpoint</div>
+      </div>
+    </div>
+    <div class="deliverable-item">
+      <div class="del-check">✓</div>
+      <div class="del-text">
+        <div class="del-title">SEO-friendly structure</div>
+        <div class="del-desc">Proper heading hierarchy, meta tags, image alt text, and fast load times</div>
+      </div>
+    </div>
+    <div class="deliverable-item">
+      <div class="del-check">✓</div>
+      <div class="del-text">
+        <div class="del-title">Live link + clean code</div>
+        <div class="del-desc">Deployed on Vercel with readable, commented, scalable code handed off</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- TOOLS & STACK -->
+<div class="section reveal">
+  <div class="section-label">Stack</div>
+  <h2>Tools & technologies</h2>
+  <p>I work with modern tools that make it easy to move fast, iterate quickly, and hand off clean work.</p>
+
+  <div class="tools-row">
+    <div class="tool-pill"><span class="tool-emoji">🎨</span> Figma</div>
+    <div class="tool-pill"><span class="tool-emoji">⚛️</span> React</div>
+    <div class="tool-pill"><span class="tool-emoji">💨</span> Tailwind CSS</div>
+    <div class="tool-pill"><span class="tool-emoji">🌐</span> HTML / CSS</div>
+    <div class="tool-pill"><span class="tool-emoji">⚡</span> JavaScript</div>
+    <div class="tool-pill"><span class="tool-emoji">▲</span> Framer</div>
+    <div class="tool-pill"><span class="tool-emoji">🕸</span> Webflow</div>
+    <div class="tool-pill"><span class="tool-emoji">🚀</span> Vercel</div>
+    <div class="tool-pill"><span class="tool-emoji">📊</span> Google Analytics</div>
+    <div class="tool-pill"><span class="tool-emoji">🔍</span> SEO Best Practices</div>
+  </div>
+
+  <!-- MY ROLE -->
+  <div style="margin-top: 52px;">
+    <div class="section-label">My Role</div>
+    <h2>What I handled</h2>
+    <div class="role-chips">
+      <div class="role-chip">🖼 UI/UX Design</div>
+      <div class="role-chip">💻 Frontend Development</div>
+      <div class="role-chip">📱 Responsive Optimization</div>
+      <div class="role-chip">🎯 Conversion Layout Planning</div>
+      <div class="role-chip">🔍 Basic SEO Structure</div>
+      <div class="role-chip">🚀 Deployment</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- OUTCOME -->
+<div class="section reveal">
+  <div class="section-label">Outcome</div>
+
+  <div class="outcome-block">
+    <h2>The result that matters</h2>
+    <p>A brand that looks credible, a site that feels premium, and a layout engineered to turn visitors into leads — not just browsers.</p>
+
+    <div class="outcome-metrics">
+      <div>
+        <div class="metric-val">100%</div>
+        <div class="metric-label">Mobile responsive</div>
+      </div>
+      <div>
+        <div class="metric-val">3–5</div>
+        <div class="metric-label">Day delivery</div>
+      </div>
+      <div>
+        <div class="metric-val">95+</div>
+        <div class="metric-label">Lighthouse score</div>
+      </div>
+      <div>
+        <div class="metric-val">1 CTA</div>
+        <div class="metric-label">Clear next step, always</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- TAGS -->
+<div class="section reveal">
+  <div class="section-label">Tags</div>
+  <h2>Project categories</h2>
+  <div class="tags-row">
+    <div class="tag">#WebDevelopment</div>
+    <div class="tag">#LandingPageDesign</div>
+    <div class="tag">#FrontendDeveloper</div>
+    <div class="tag">#UIDesign</div>
+    <div class="tag">#Framer</div>
+    <div class="tag">#Webflow</div>
+    <div class="tag">#ResponsiveDesign</div>
+    <div class="tag">#SaaSWebsite</div>
+    <div class="tag">#StartupWebsite</div>
+    <div class="tag">#ConversionDesign</div>
+    <div class="tag">#React</div>
+    <div class="tag">#TailwindCSS</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CTA / HIRE ME -->
+<div class="cta-section reveal" id="hire">
+  <div class="section-label" style="justify-content: center; margin-bottom: 24px;">Available Now</div>
+  <h2>Let's build your site together</h2>
+  <p>Looking for a website, landing page, or redesign? I'm currently available for new projects.</p>
+  <div class="cta-btns">
+    <a href="#" class="btn-primary">Hire Me on Contra →</a>
+    <a href="#" class="btn-secondary">View My Profile</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-note">
+    <span class="dot-sm"></span>
+    Portfolio Concept Project — Not a verified paid client project
+  </div>
+  <div style="color: var(--muted); font-size: 13px;">
+    Available for website · landing page · redesign work
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
